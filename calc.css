@@ -1,0 +1,48 @@
+*{
+    font-family: 'Times New Roman', 'Times', 'serif';
+    padding: 12px;
+    background-color: rgb(226, 226, 226);
+    
+}
+body{
+    display: flex;
+    justify-content: center;
+}
+.displayText{
+    background-color: inherit;
+    width: 90%;
+    font-size: larger;
+    font-weight: bold;
+    direction: rtl;
+}
+
+.inputScreen{
+    height: 50px;
+    width: 92%;
+    background-color: beige;
+}
+.button-row-5{
+    display: flex;
+}
+.equalBtn{
+    flex-grow: 1;
+    border-radius: 0%;
+    background-color: beige;
+}
+
+.calcBody{
+    height: fit-content;
+    width: fit-content;
+    background-color: whitesmoke;
+    float: center;
+    
+}
+
+.btn, .btnNum{
+    background-color: beige;
+    border-radius: 46%;
+    min-height: 60px;
+    min-width: 60px;
+    font-weight: bold;
+    
+}
