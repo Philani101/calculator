@@ -18,7 +18,7 @@ function calc(x: number, y: number, symbol: string): number {
   if (symbol === "+") {
     return addition(x, y);
   }
-  if (symbol === "*" || symbol === "&times") {
+  if (symbol === "*") {
     return multiplication(x, y);
   }
   if (symbol === "/") {
@@ -66,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
     tempNumber = "";
     finalList = [];
-    miniDisplay = "";
+    let mini = document.querySelector('.miniDisplay') as HTMLInputElement;
+    mini.innerText = "";
     console.log(tempNumber);
     display.value = "0";
   });
@@ -107,7 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector('#equalto')?.addEventListener("click", (event: Event) => {
     event.preventDefault();
     console.log("clicked =");
-    
+    let mini = document.querySelector('.miniDisplay') as HTMLInputElement;
+    mini.innerText = miniDisplay + tempNumber;
     
     if (tempNumber !== "") {
       const num = parseFloat(tempNumber);

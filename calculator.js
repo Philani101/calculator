@@ -14,7 +14,7 @@ function calc(x, y, symbol) {
     if (symbol === "+") {
         return addition(x, y);
     }
-    if (symbol === "*" || symbol === "&times") {
+    if (symbol === "*") {
         return multiplication(x, y);
     }
     if (symbol === "/") {
@@ -57,7 +57,8 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
         tempNumber = "";
         finalList = [];
-        miniDisplay = "";
+        var mini = document.querySelector('.miniDisplay');
+        mini.innerText = "";
         console.log(tempNumber);
         display.value = "0";
     });
@@ -93,6 +94,8 @@ document.addEventListener("DOMContentLoaded", function () {
     (_t = document.querySelector('#equalto')) === null || _t === void 0 ? void 0 : _t.addEventListener("click", function (event) {
         event.preventDefault();
         console.log("clicked =");
+        var mini = document.querySelector('.miniDisplay');
+        mini.innerText = miniDisplay + tempNumber;
         if (tempNumber !== "") {
             var num = parseFloat(tempNumber);
             finalList.push(num);
