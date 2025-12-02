@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 <head>
     <title>Calculator App</title>
     <link rel="stylesheet" type="text/css" href="calc.css">
@@ -7,22 +7,48 @@
 </head>
 <body>
     <section class="calcBody">
+        <div class="mode-toggle">
+            <button id="modeToggle" class="toggle-btn">Scientific Mode</button>
+        </div>
+        
         <section class="inputScreen">
             <p class="miniDisplay"></p>
-            <input class="displayText" type="text" value="0">
+            <input class="displayText" type="text" value="0" readonly>
         </section>
+        
         <section class="buttons-container">
+            <!-- Scientific functions (hidden by default) -->
+            <section class="button-row scientific-row" style="display: none;">
+                <input class="btn sci-btn" type="button" id="sin" value="sin">
+                <input class="btn sci-btn" type="button" id="cos" value="cos">
+                <input class="btn sci-btn" type="button" id="tan" value="tan">
+                <input class="btn sci-btn" type="button" id="log" value="log">
+            </section>
+            <section class="button-row scientific-row" style="display: none;">
+                <input class="btn sci-btn" type="button" id="sqrt" value="√">
+                <input class="btn sci-btn" type="button" id="power" value="x²">
+                <input class="btn sci-btn" type="button" id="exp" value="eˣ">
+                <input class="btn sci-btn" type="button" id="ln" value="ln">
+            </section>
+            <section class="button-row scientific-row" style="display: none;">
+                <input class="btn sci-btn" type="button" id="pi" value="π">
+                <input class="btn sci-btn" type="button" id="euler" value="e">
+                <input class="btn sci-btn" type="button" id="openParen" value="(">
+                <input class="btn sci-btn" type="button" id="closeParen" value=")">
+            </section>
+            
+            <!-- Standard calculator buttons -->
             <section class="button-row">
                 <input class="btn" type="button" id="clear" value="clr">
                 <input class="btn" type="button" id="delete" value="DEL">
-                <input class="btn" type="button" value="%">
+                <input class="btn" type="button" id="percent" value="%">
                 <input class="btn" id="divide" type="button" value="/">
             </section>
             <section class="button-row">
                 <input class="btnNum" id="seven" type="button" value="7">
                 <input class="btnNum" id="eight" type="button" value="8">
                 <input class="btnNum" id="nine" type="button" value="9">
-                <input class="btn" id="times" type="button" value="&times">
+                <input class="btn" id="times" type="button" value="×">
             </section>
             <section class="button-row">
                 <input class="btnNum" id="four" type="button" value="4">

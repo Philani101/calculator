@@ -1,3 +1,4 @@
+// Basic arithmetic functions
 function addition(x: number, y: number): number {
   return x + y;
 }
@@ -15,6 +16,52 @@ function division(x: number, y: number): number {
     throw new Error("Cannot divide by zero");
   }
   return x / y;
+}
+
+// Scientific functions
+function sine(x: number): number {
+  return Math.sin(x);
+}
+
+function cosine(x: number): number {
+  return Math.cos(x);
+}
+
+function tangent(x: number): number {
+  return Math.tan(x);
+}
+
+function logarithm(x: number): number {
+  if (x <= 0) {
+    throw new Error("Logarithm undefined for non-positive numbers");
+  }
+  return Math.log10(x);
+}
+
+function naturalLog(x: number): number {
+  if (x <= 0) {
+    throw new Error("Natural log undefined for non-positive numbers");
+  }
+  return Math.log(x);
+}
+
+function squareRoot(x: number): number {
+  if (x < 0) {
+    throw new Error("Cannot calculate square root of negative number");
+  }
+  return Math.sqrt(x);
+}
+
+function square(x: number): number {
+  return x * x;
+}
+
+function exponential(x: number): number {
+  return Math.exp(x);
+}
+
+function percentage(x: number): number {
+  return x / 100;
 }
 
 function calc(x: number, y: number, symbol: string): number {
@@ -38,17 +85,42 @@ type finalListValues = string | number;
 let finalList: finalListValues[] = [];
 let miniDisplay: string = "";
 let prevAnswer: string = "";
+let isScientificMode: boolean = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Calculator initialized");
   
   const display = document.querySelector('.displayText') as HTMLInputElement;
   const miniDisplayElement = document.querySelector('.miniDisplay') as HTMLElement;
+  const calcBody = document.querySelector('.calcBody') as HTMLElement;
+  const modeToggleBtn = document.querySelector('#modeToggle') as HTMLButtonElement;
+  const scientificRows = document.querySelectorAll('.scientific-row') as NodeListOf<HTMLElement>;
   
   // Check if required elements exist
   if (!display) {
     console.error("Display element not found");
     return;
+  }
+
+  // Mode toggle functionality
+  if (modeToggleBtn) {
+    modeToggleBtn.addEventListener('click', () => {
+      isScientificMode = !isScientificMode;
+      
+      scientificRows.forEach(row => {
+        row.style.display = isScientificMode ? 'flex' : 'none';
+      });
+      
+      if (calcBody) {
+        if (isScientificMode) {
+          calcBody.classList.add('scientific-mode');
+          modeToggleBtn.textContent = 'Standard Mode';
+        } else {
+          calcBody.classList.remove('scientific-mode');
+          modeToggleBtn.textContent = 'Scientific Mode';
+        }
+      }
+    });
   }
 
   // Helper function to update mini display safely
@@ -79,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Prevent multiple decimal points
-    if (target.value === "." && tempNumber.includes(".")) {
+    if (target.value === "." && tempNumber.indexOf(".") !== -1) {
       return;
     }
 
@@ -163,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     finalList.push(num);
-   miniDisplay = miniDisplay + tempNumber;
+    miniDisplay = miniDisplay + tempNumber;
     tempNumber = "";
     display.value = "0";
     
@@ -188,6 +260,82 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       console.warn(`Operator button ${selector} not found`);
     }
+  });
+
+  // Scientific function handlers
+  const handleScientificFunction = (func: (x: number) => number, funcName: string) => {
+    try {
+      const num = parseFloat(tempNumber || prevAnswer || "0");
+      if (isNaN(num)) {
+        showError("Invalid number");
+        return;
+      }
+      const result = func(num);
+      if (!isFinite(result)) {
+        showError("Result is not a finite number");
+        return;
+      }
+      const roundedResult = Math.round(result * 1000000000) / 1000000000;
+      display.value = roundedResult.toString();
+      prevAnswer = roundedResult.toString();
+      tempNumber = roundedResult.toString();
+      updateMiniDisplay(funcName + "(" + num + ")");
+    } catch (error) {
+      if (error instanceof Error) {
+        showError(error.message);
+      } else {
+        showError("An unknown error occurred");
+      }
+    }
+  };
+
+  // Scientific buttons
+  document.querySelector('#sin')?.addEventListener("click", () => {
+    handleScientificFunction(sine, "sin");
+  });
+
+  document.querySelector('#cos')?.addEventListener("click", () => {
+    handleScientificFunction(cosine, "cos");
+  });
+
+  document.querySelector('#tan')?.addEventListener("click", () => {
+    handleScientificFunction(tangent, "tan");
+  });
+
+  document.querySelector('#log')?.addEventListener("click", () => {
+    handleScientificFunction(logarithm, "log");
+  });
+
+  document.querySelector('#ln')?.addEventListener("click", () => {
+    handleScientificFunction(naturalLog, "ln");
+  });
+
+  document.querySelector('#sqrt')?.addEventListener("click", () => {
+    handleScientificFunction(squareRoot, "√");
+  });
+
+  document.querySelector('#power')?.addEventListener("click", () => {
+    handleScientificFunction(square, "x²");
+  });
+
+  document.querySelector('#exp')?.addEventListener("click", () => {
+    handleScientificFunction(exponential, "e^");
+  });
+
+  // Percentage button
+  document.querySelector('#percent')?.addEventListener("click", () => {
+    handleScientificFunction(percentage, "%");
+  });
+
+  // Constants
+  document.querySelector('#pi')?.addEventListener("click", () => {
+    tempNumber = Math.PI.toString();
+    display.value = tempNumber;
+  });
+
+  document.querySelector('#euler')?.addEventListener("click", () => {
+    tempNumber = Math.E.toString();
+    display.value = tempNumber;
   });
 
   // Equals operator functionality
