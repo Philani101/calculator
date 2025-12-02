@@ -14,7 +14,7 @@ function calc(x, y, symbol) {
     if (symbol === "+") {
         return addition(x, y);
     }
-    if (symbol === "*") {
+    if (symbol === "×") {
         return multiplication(x, y);
     }
     if (symbol === "/") {
@@ -28,8 +28,9 @@ function calc(x, y, symbol) {
 var tempNumber = "";
 var finalList = [];
 var miniDisplay = "";
+var prevAnswer = "";
 document.addEventListener("DOMContentLoaded", function () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
     console.log("done");
     var display = document.querySelector('.displayText');
     // Helper function to handle number inputs
@@ -52,8 +53,12 @@ document.addEventListener("DOMContentLoaded", function () {
     (_j = document.querySelector('#nine')) === null || _j === void 0 ? void 0 : _j.addEventListener("click", handleNumberClick);
     (_k = document.querySelector('#zero')) === null || _k === void 0 ? void 0 : _k.addEventListener("click", handleNumberClick);
     (_l = document.querySelector('#fullstop')) === null || _l === void 0 ? void 0 : _l.addEventListener("click", handleNumberClick);
+    (_m = document.querySelector('#ans')) === null || _m === void 0 ? void 0 : _m.addEventListener("click", function (event) {
+        tempNumber = prevAnswer;
+        display.value = tempNumber;
+    });
     // Clear and delete functionality
-    (_m = document.querySelector('#clear')) === null || _m === void 0 ? void 0 : _m.addEventListener("click", function (event) {
+    (_o = document.querySelector('#clear')) === null || _o === void 0 ? void 0 : _o.addEventListener("click", function (event) {
         event.preventDefault();
         tempNumber = "";
         finalList = [];
@@ -62,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(tempNumber);
         display.value = "0";
     });
-    (_o = document.querySelector('#delete')) === null || _o === void 0 ? void 0 : _o.addEventListener("click", function (event) {
+    (_p = document.querySelector('#delete')) === null || _p === void 0 ? void 0 : _p.addEventListener("click", function (event) {
         event.preventDefault();
         tempNumber = tempNumber.slice(0, -1);
         console.log(tempNumber);
@@ -86,12 +91,12 @@ document.addEventListener("DOMContentLoaded", function () {
         mini.innerText = miniDisplay;
     };
     // Operators functionality
-    (_p = document.querySelector('#plus')) === null || _p === void 0 ? void 0 : _p.addEventListener("click", handleOperator);
-    (_q = document.querySelector('#times')) === null || _q === void 0 ? void 0 : _q.addEventListener("click", handleOperator);
-    (_r = document.querySelector('#minus')) === null || _r === void 0 ? void 0 : _r.addEventListener("click", handleOperator);
-    (_s = document.querySelector('#divide')) === null || _s === void 0 ? void 0 : _s.addEventListener("click", handleOperator);
+    (_q = document.querySelector('#plus')) === null || _q === void 0 ? void 0 : _q.addEventListener("click", handleOperator);
+    (_r = document.querySelector('#times')) === null || _r === void 0 ? void 0 : _r.addEventListener("click", handleOperator);
+    (_s = document.querySelector('#minus')) === null || _s === void 0 ? void 0 : _s.addEventListener("click", handleOperator);
+    (_t = document.querySelector('#divide')) === null || _t === void 0 ? void 0 : _t.addEventListener("click", handleOperator);
     // Equals operator functionality
-    (_t = document.querySelector('#equalto')) === null || _t === void 0 ? void 0 : _t.addEventListener("click", function (event) {
+    (_u = document.querySelector('#equalto')) === null || _u === void 0 ? void 0 : _u.addEventListener("click", function (event) {
         event.preventDefault();
         console.log("clicked =");
         var mini = document.querySelector('.miniDisplay');
@@ -116,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         console.log("Result:", result);
         display.value = result.toString();
+        prevAnswer = display.value;
         // Reset for next calculation
         tempNumber = "";
         finalList = [];

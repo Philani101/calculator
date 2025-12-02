@@ -18,7 +18,7 @@ function calc(x: number, y: number, symbol: string): number {
   if (symbol === "+") {
     return addition(x, y);
   }
-  if (symbol === "*") {
+  if (symbol === "×") {
     return multiplication(x, y);
   }
   if (symbol === "/") {
@@ -34,6 +34,7 @@ let tempNumber: string = "";
 type finalListValues = string | number;
 let finalList: finalListValues[] = [];
 let miniDisplay: string = "";
+let prevAnswer: string = "";
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("done");
@@ -60,6 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector('#nine')?.addEventListener("click", handleNumberClick);
   document.querySelector('#zero')?.addEventListener("click", handleNumberClick);
   document.querySelector('#fullstop')?.addEventListener("click", handleNumberClick);
+  document.querySelector('#ans')?.addEventListener("click", (event: Event) => {
+    tempNumber = prevAnswer;
+    display.value = tempNumber;
+  });
 
   // Clear and delete functionality
   document.querySelector('#clear')?.addEventListener("click", (event: Event) => {
@@ -137,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     console.log("Result:", result);
     display.value = result.toString();
+    prevAnswer = display.value;
     
     // Reset for next calculation
     tempNumber = "";
